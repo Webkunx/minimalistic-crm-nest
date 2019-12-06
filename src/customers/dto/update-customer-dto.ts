@@ -10,7 +10,6 @@ export class UpdateCustomerDto {
   lastname: string;
 
   @IsOptional()
-  @IsAlpha()
   address: string;
 
   @IsOptional()
