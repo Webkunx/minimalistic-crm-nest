@@ -1,4 +1,11 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  BaseEntity,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+} from 'typeorm';
+import { Order } from 'src/orders/order.entity';
 
 @Entity()
 export class Customer extends BaseEntity {
@@ -16,4 +23,11 @@ export class Customer extends BaseEntity {
 
   @Column()
   age: number;
+
+  @OneToMany(
+    type => Order,
+    order => order.customer,
+    { eager: true },
+  )
+  orders: Order[];
 }

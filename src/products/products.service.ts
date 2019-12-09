@@ -46,4 +46,9 @@ export class ProductsService {
     const found = await this.getProductById(id);
     return found.remove();
   }
+
+  async addProductToOrder(id: number, quantity: number): Promise<Product> {
+    const found = await this.getProductById(id);
+    return this.productRepository.addProductToOrder(found, quantity);
+  }
 }
