@@ -3,12 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { OrderRepository } from './order.repository';
 import { Order } from './order.entity';
 import { ProductsService } from 'src/products/products.service';
+import { ProductRepository } from 'src/products/product.repository';
 
 @Injectable()
 export class OrdersService {
   constructor(
     @InjectRepository(OrderRepository)
     private orderRepository: OrderRepository,
+    @InjectRepository(ProductRepository)
+    private productRepository: ProductRepository,
   ) {}
 
   async getAllOrders(): Promise<Order[]> {
@@ -33,5 +36,16 @@ export class OrdersService {
     const found = await this.getOrderById(id);
     return this.orderRepository.remove(found);
   }
-  async addProductToOrder(id: number, quantity: number) {}
+  async addProductToOrder(
+    productId: number,
+    quantity: number,
+    orderId: number,
+  ) {
+    const found = await this.productRepository.findOne({
+      where: { id: productId },
+    });
+    if (!found)
+      throw new NotFoundException('Product with this id doesnt exist');
+    this.productRepository.addProductToOrder(found, quantity);
+  }
 }
