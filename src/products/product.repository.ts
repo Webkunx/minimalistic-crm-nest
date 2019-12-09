@@ -6,19 +6,6 @@ import { NotFoundException, BadRequestException } from '@nestjs/common';
 
 @EntityRepository(Product)
 export class ProductRepository extends Repository<Product> {
-  async addProductToOrder(
-    product: Product,
-    quantity: number,
-  ): Promise<Product> {
-    const newQuantity = product.quantity - quantity;
-    if (newQuantity < 0)
-      throw new BadRequestException(
-        `We don't have ${quantity} of ${product.name} on our storage, we have only ${product.quantity}`,
-      );
-    product.quantity = newQuantity;
-    await product.save();
-    return product;
-  }
   async createProduct(createProductDto: CreateProductDto): Promise<Product> {
     const { name, quantity, price } = createProductDto;
     const product = new Product();
@@ -29,6 +16,19 @@ export class ProductRepository extends Repository<Product> {
 
     await product.save();
     return product;
+  }
+
+  async addProductToOrder(id: number, quantity: number) {
+    const product = await this.findOne({ where: { id } });
+    if (!product)
+      throw new NotFoundException('product with this id doesnt exists');
+    const newQuantity = product.quantity - quantity;
+    if (newQuantity < 0)
+      throw new BadRequestException(
+        'dont have so much of this product at our storage',
+      );
+    product.quantity = newQuantity;
+    product.save();
   }
 
   async updateProduct(

@@ -2,7 +2,10 @@ import { Injectable, NotFoundException, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OrderRepository } from './order.repository';
 import { Order } from './order.entity';
-import { ProductsService } from 'src/products/products.service';
+import { AddProductToOrderDto } from './dto/add-product-to-order.dto';
+import { ProductOrderRepository } from './product-order.repository';
+import { ProductOrder } from './product-order.entity';
+import { CustomersService } from 'src/customers/customers.service';
 import { ProductRepository } from 'src/products/product.repository';
 
 @Injectable()
@@ -10,15 +13,23 @@ export class OrdersService {
   constructor(
     @InjectRepository(OrderRepository)
     private orderRepository: OrderRepository,
+    @InjectRepository(ProductOrderRepository)
+    private productOrderRepository: ProductOrderRepository,
     @InjectRepository(ProductRepository)
     private productRepository: ProductRepository,
+    private customerService: CustomersService,
   ) {}
 
   async getAllOrders(): Promise<Order[]> {
     return this.orderRepository.find();
   }
 
-  async getOrderByCustomerId(id: number): Promise<Order[]> {
+  async createOrder(customerId: number): Promise<Order> {
+    const customer = this.customerService.getCustomerById(customerId);
+    return this.orderRepository.createOrder(customerId);
+  }
+
+  async getOrdersByCustomerId(id: number): Promise<Order[]> {
     const found = await this.orderRepository.find({
       where: { customerId: id },
     });
@@ -36,16 +47,18 @@ export class OrdersService {
     const found = await this.getOrderById(id);
     return this.orderRepository.remove(found);
   }
+
   async addProductToOrder(
-    productId: number,
-    quantity: number,
     orderId: number,
-  ) {
-    const found = await this.productRepository.findOne({
-      where: { id: productId },
-    });
-    if (!found)
-      throw new NotFoundException('Product with this id doesnt exist');
-    this.productRepository.addProductToOrder(found, quantity);
+    addProductToOrderDto: AddProductToOrderDto,
+  ): Promise<ProductOrder> {
+    const order = await this.getOrderById(orderId);
+    const { productId, quantity } = addProductToOrderDto;
+
+    await this.productRepository.addProductToOrder(productId, quantity);
+    return this.productOrderRepository.addProductToOrder(
+      order,
+      addProductToOrderDto,
+    );
   }
 }
