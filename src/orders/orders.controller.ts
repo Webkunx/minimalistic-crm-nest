@@ -6,6 +6,8 @@ import {
   Delete,
   Post,
   Body,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { Order } from './order.entity';
@@ -37,7 +39,7 @@ export class OrdersController {
   async deleteOrderById(@Param('id', ParseIntPipe) id: number): Promise<Order> {
     return this.ordersService.deleteOrderById(id);
   }
-
+  @UsePipes(ValidationPipe)
   @Post('/product/:id')
   async addProductToOrder(
     @Param('id', ParseIntPipe) id: number,
