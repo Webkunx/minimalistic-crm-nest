@@ -7,7 +7,6 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { CustomersModule } from './customers/customers.module';
 import { OrdersModule } from './orders/orders.module';
 import { AuthModule } from './auth/auth.module';
-import { AuthController } from './no-specs/auth/auth.controller';
 
 @Module({
   imports: [
@@ -17,7 +16,7 @@ import { AuthController } from './no-specs/auth/auth.controller';
     OrdersModule,
     AuthModule,
   ],
-  controllers: [AppController, AuthController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
