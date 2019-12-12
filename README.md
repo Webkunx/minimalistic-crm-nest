@@ -35,8 +35,8 @@ Minimalistic CRM for my soul
 - Unit tests
 - Enviroment variables
 - Logging
-- FE with **Angular 2** in another repo
-
+- FE with **ReactJS** in another repo
+- Swagger
 ## Installation
 
 ```bash
