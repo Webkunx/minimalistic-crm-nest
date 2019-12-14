@@ -33,13 +33,17 @@ export class OrdersService {
     const found = await this.orderRepository.find({
       where: { customerId: id },
     });
-    if (!found) throw new NotFoundException('No orders for that customer');
+    if (!found) {
+      throw new NotFoundException('No orders for that customer');
+    }
     return found;
   }
 
   async getOrderById(id: number): Promise<Order> {
     const found = await this.orderRepository.findOne({ where: { id } });
-    if (!found) throw new NotFoundException('Order with this id doesnt exist');
+    if (!found) {
+      throw new NotFoundException('Order with this id doesnt exist');
+    }
     return found;
   }
 

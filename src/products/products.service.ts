@@ -28,9 +28,9 @@ export class ProductsService {
       },
     });
 
-    if (!found)
+    if (!found) {
       throw new NotFoundException(`Product with id ${id} doesn't exists`);
-
+    }
     return found;
   }
 
@@ -42,7 +42,7 @@ export class ProductsService {
     return this.productRepository.updateProduct(found, updateProductDto);
   }
 
-  async removeProduct(id): Promise<Product> {
+  async removeProduct(id: number): Promise<Product> {
     const found = await this.getProductById(id);
     return found.remove();
   }

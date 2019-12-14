@@ -20,13 +20,15 @@ export class ProductRepository extends Repository<Product> {
 
   async addProductToOrder(id: number, quantity: number) {
     const product = await this.findOne({ where: { id } });
-    if (!product)
+    if (!product) {
       throw new NotFoundException('product with this id doesnt exists');
+    }
     const newQuantity = product.quantity - quantity;
-    if (newQuantity < 0)
+    if (newQuantity < 0) {
       throw new BadRequestException(
         'dont have so much of this product at our storage',
       );
+    }
     product.quantity = newQuantity;
     product.save();
   }

@@ -24,8 +24,9 @@ export class CustomersService {
 
   async getCustomerById(id: number): Promise<Customer> {
     const found = await this.customerRepository.findOne({ where: { id } });
-    if (!found)
-      throw new NotFoundException("Customer with this id doesn't exist");
+    if (!found) {
+      throw new NotFoundException('Customer with this id doesnt exist');
+    }
     return found;
   }
 
