@@ -9,12 +9,15 @@ import {
   ParseIntPipe,
   Put,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product-dto';
 import { Product } from './product.entity';
 import { UpdateProductDto } from './dto/update-product-dto';
+import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard())
 @Controller('products')
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
