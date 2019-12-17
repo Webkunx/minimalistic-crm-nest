@@ -5,6 +5,7 @@ import * as morgan from 'morgan';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.use(morgan('dev'));
   const swaggerOptions = new DocumentBuilder()
     .setTitle('mCRM by Webkunx')
