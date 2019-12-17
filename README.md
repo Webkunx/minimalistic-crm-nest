@@ -30,13 +30,15 @@ Minimalistic CRM for my soul
 
 ## Will be done in future
 
-- Validation pipes
-- JWT auth strategy
+- Check for Error handling
+- ~~Validation pipes~~
+- ~~JWT auth strategy~~
 - Unit tests
 - Enviroment variables
 - Logging
 - FE with **ReactJS** in another repo
-- Swagger
+- ~~Swagger~~
+
 ## Installation
 
 ```bash

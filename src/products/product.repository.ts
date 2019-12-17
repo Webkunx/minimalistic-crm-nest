@@ -2,10 +2,16 @@ import { EntityRepository, Repository } from 'typeorm';
 import { Product } from './product.entity';
 import { CreateProductDto } from './dto/create-product-dto';
 import { UpdateProductDto } from './dto/update-product-dto';
-import { NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  NotFoundException,
+  BadRequestException,
+  Logger,
+  InternalServerErrorException,
+} from '@nestjs/common';
 
 @EntityRepository(Product)
 export class ProductRepository extends Repository<Product> {
+  private logger = new Logger('ProductRepository');
   async createProduct(createProductDto: CreateProductDto): Promise<Product> {
     const { name, quantity, price } = createProductDto;
     const product = new Product();
@@ -14,7 +20,17 @@ export class ProductRepository extends Repository<Product> {
     product.quantity = quantity;
     product.price = price;
 
-    await product.save();
+    try {
+      await product.save();
+    } catch (e) {
+      this.logger.error(
+        `Failed to create product with data: ${(JSON.stringify(
+          createProductDto,
+        ),
+        e.stack)}`,
+      );
+      throw new InternalServerErrorException();
+    }
     return product;
   }
 
@@ -30,7 +46,7 @@ export class ProductRepository extends Repository<Product> {
       );
     }
     product.quantity = newQuantity;
-    product.save();
+    await product.save();
   }
 
   async updateProduct(
@@ -43,7 +59,15 @@ export class ProductRepository extends Repository<Product> {
     product.quantity = quantity || product.quantity;
     product.price = price || product.price;
 
-    await product.save();
+    try {
+      await product.save();
+    } catch (e) {
+      this.logger.error(
+        `Failed to update a product with data: ${updateProductDto}`,
+        e.stack,
+      );
+      throw new InternalServerErrorException();
+    }
     return product;
   }
 }

@@ -10,6 +10,7 @@ import {
   Put,
   Delete,
   UseGuards,
+  Logger,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product-dto';
@@ -20,10 +21,12 @@ import { AuthGuard } from '@nestjs/passport';
 // @UseGuards(AuthGuard())
 @Controller('products')
 export class ProductsController {
+  private logger = new Logger('ProductsController');
   constructor(private productsService: ProductsService) {}
 
   @Get()
   getAllproducts(): Promise<Product[]> {
+    this.logger.verbose('Retrieving all products');
     return this.productsService.getAllProducts();
   }
 
@@ -32,6 +35,9 @@ export class ProductsController {
   async createProduct(
     @Body() createProductDto: CreateProductDto,
   ): Promise<Product> {
+    this.logger.verbose(
+      `Creating Product with data: ${JSON.stringify(createProductDto)}`,
+    );
     return this.productsService.createProduct(createProductDto);
   }
 
