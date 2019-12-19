@@ -15,6 +15,7 @@ import { Order } from './order.entity';
 import { AddProductToOrderDto } from './dto/add-product-to-order.dto';
 import { ProductOrder } from './product-order.entity';
 import { OrderStatus } from './order-status.enum';
+import { OrderStatusValidationPipe } from './pipes/order-status.validation.pipe';
 
 @Controller('orders')
 export class OrdersController {
@@ -53,7 +54,7 @@ export class OrdersController {
   @Patch(':id/status')
   async updateOrderStatus(
     @Param('id', ParseIntPipe) orderId: number,
-    @Body() status: OrderStatus,
+    @Body('status', OrderStatusValidationPipe) status: OrderStatus,
   ): Promise<Order> {
     return this.ordersService.updateOrderStatus(orderId, status);
   }
