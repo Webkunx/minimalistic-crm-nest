@@ -54,15 +54,21 @@ export class OrdersService {
 
   async addProductToOrder(
     orderId: number,
-    addProductToOrderDto: AddProductToOrderDto,
-  ): Promise<ProductOrder> {
+    addProductToOrderDto: AddProductToOrderDto[],
+  ): Promise<ProductOrder[]> {
     const order = await this.getOrderById(orderId);
-    const { productId, quantity } = addProductToOrderDto;
 
-    await this.productRepository.addProductToOrder(productId, quantity);
+    const productsToBeCreated = [];
+
+    for (let product of addProductToOrderDto) {
+      const { productId, quantity } = product;
+      await this.productRepository.addProductToOrder(productId, quantity);
+      productsToBeCreated.push(product);
+    }
+
     return this.productOrderRepository.addProductToOrder(
       order,
-      addProductToOrderDto,
+      productsToBeCreated,
     );
   }
 }

@@ -44,8 +44,8 @@ export class OrdersController {
   async addProductToOrder(
     @Param('id', ParseIntPipe) id: number,
 
-    @Body() addProductToOrderDto: AddProductToOrderDto,
-  ): Promise<ProductOrder> {
+    @Body() addProductToOrderDto: AddProductToOrderDto[],
+  ): Promise<ProductOrder[]> {
     return this.ordersService.addProductToOrder(id, addProductToOrderDto);
   }
 }

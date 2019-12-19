@@ -7,19 +7,26 @@ import { Order } from './order.entity';
 export class ProductOrderRepository extends Repository<ProductOrder> {
   async addProductToOrder(
     order: Order,
-    addProductToOrderDto: AddProductToOrderDto,
-  ): Promise<ProductOrder> {
-    const { productId, name, price, quantity } = addProductToOrderDto;
-    const productOrder = new ProductOrder();
+    addProductToOrderDto: AddProductToOrderDto[],
+  ): Promise<ProductOrder[]> {
+    const productsCreated = [];
 
-    productOrder.productId = productId;
-    productOrder.name = name;
-    productOrder.price = price;
-    productOrder.quantity = quantity;
-    productOrder.order = order;
+    for (let newProductForOrder of addProductToOrderDto) {
+      const { productId, name, price, quantity } = newProductForOrder;
+      const productOrder = new ProductOrder();
 
-    productOrder.save();
-    delete productOrder.order;
-    return productOrder;
+      productOrder.productId = productId;
+      productOrder.name = name;
+      productOrder.price = price;
+      productOrder.quantity = quantity;
+      productOrder.order = order;
+
+      await productOrder.save();
+
+      delete productOrder.order;
+      productsCreated.push(productOrder);
+    }
+
+    return productsCreated;
   }
 }

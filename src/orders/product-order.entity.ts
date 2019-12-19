@@ -27,7 +27,7 @@ export class ProductOrder extends BaseEntity {
   @ManyToOne(
     type => Order,
     order => order.productOrder,
-    { eager: false },
+    { eager: false, onDelete: 'CASCADE' },
   )
   order: Order;
 }
