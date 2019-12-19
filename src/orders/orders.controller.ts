@@ -42,10 +42,10 @@ export class OrdersController {
   @UsePipes(ValidationPipe)
   @Post('/product/:id')
   async addProductToOrder(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe) orderId: number,
 
     @Body() addProductToOrderDto: AddProductToOrderDto[],
   ): Promise<ProductOrder[]> {
-    return this.ordersService.addProductToOrder(id, addProductToOrderDto);
+    return this.ordersService.addProductToOrder(orderId, addProductToOrderDto);
   }
 }

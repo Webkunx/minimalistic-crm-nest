@@ -34,7 +34,7 @@ export class ProductRepository extends Repository<Product> {
     return product;
   }
 
-  async addProductToOrder(id: number, quantity: number) {
+  async addProductToOrder(id: number, quantity: number): Promise<Product> {
     const product = await this.findOne({ where: { id } });
     if (!product) {
       throw new NotFoundException('product with this id doesnt exists');
@@ -47,6 +47,9 @@ export class ProductRepository extends Repository<Product> {
     }
     product.quantity = newQuantity;
     await product.save();
+    const productAddedToOrder = product;
+    productAddedToOrder.quantity = quantity;
+    return productAddedToOrder;
   }
 
   async updateProduct(

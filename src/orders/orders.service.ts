@@ -58,17 +58,20 @@ export class OrdersService {
   ): Promise<ProductOrder[]> {
     const order = await this.getOrderById(orderId);
 
-    const productsToBeCreated = [];
+    const productsToBeAddedToOrder = [];
 
     for (let product of addProductToOrderDto) {
       const { productId, quantity } = product;
-      await this.productRepository.addProductToOrder(productId, quantity);
-      productsToBeCreated.push(product);
+      const productToOrder = await this.productRepository.addProductToOrder(
+        productId,
+        quantity,
+      );
+      productsToBeAddedToOrder.push(productToOrder);
     }
 
     return this.productOrderRepository.addProductToOrder(
       order,
-      productsToBeCreated,
+      productsToBeAddedToOrder,
     );
   }
 }
