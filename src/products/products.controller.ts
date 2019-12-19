@@ -18,7 +18,7 @@ import { Product } from './product.entity';
 import { UpdateProductDto } from './dto/update-product-dto';
 import { AuthGuard } from '@nestjs/passport';
 
-@UseGuards(AuthGuard())
+// @UseGuards(AuthGuard())
 @Controller('products')
 export class ProductsController {
   private logger = new Logger('ProductsController');

@@ -8,11 +8,13 @@ import {
   Body,
   UsePipes,
   ValidationPipe,
+  Patch,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { Order } from './order.entity';
 import { AddProductToOrderDto } from './dto/add-product-to-order.dto';
 import { ProductOrder } from './product-order.entity';
+import { OrderStatus } from './order-status.enum';
 
 @Controller('orders')
 export class OrdersController {
@@ -43,9 +45,16 @@ export class OrdersController {
   @Post('/product/:id')
   async addProductToOrder(
     @Param('id', ParseIntPipe) orderId: number,
-
     @Body() addProductToOrderDto: AddProductToOrderDto[],
   ): Promise<ProductOrder[]> {
     return this.ordersService.addProductToOrder(orderId, addProductToOrderDto);
+  }
+
+  @Patch(':id/status')
+  async updateOrderStatus(
+    @Param('id', ParseIntPipe) orderId: number,
+    @Body() status: OrderStatus,
+  ): Promise<Order> {
+    return this.ordersService.updateOrderStatus(orderId, status);
   }
 }

@@ -7,6 +7,7 @@ import { ProductOrderRepository } from './product-order.repository';
 import { ProductOrder } from './product-order.entity';
 import { CustomersService } from 'src/customers/customers.service';
 import { ProductRepository } from 'src/products/product.repository';
+import { OrderStatus } from './order-status.enum';
 
 @Injectable()
 export class OrdersService {
@@ -73,5 +74,15 @@ export class OrdersService {
       order,
       productsToBeAddedToOrder,
     );
+  }
+
+  async updateOrderStatus(
+    orderId: number,
+    status: OrderStatus,
+  ): Promise<Order> {
+    const order = await this.getOrderById(orderId);
+    order.status = status;
+    await order.save();
+    return order;
   }
 }
