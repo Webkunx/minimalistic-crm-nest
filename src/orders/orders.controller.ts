@@ -16,6 +16,7 @@ import { AddProductToOrderDto } from './dto/add-product-to-order.dto';
 import { ProductOrder } from './product-order.entity';
 import { OrderStatus } from './order-status.enum';
 import { OrderStatusValidationPipe } from './pipes/order-status.validation.pipe';
+import { ApiBody, ApiQuery } from '@nestjs/swagger';
 
 @Controller('orders')
 export class OrdersController {
@@ -44,13 +45,15 @@ export class OrdersController {
   }
   @UsePipes(ValidationPipe)
   @Post('/product/:id')
+  @ApiBody({ type: [AddProductToOrderDto] })
   async addProductToOrder(
-    @Param('id', ParseIntPipe) orderId: number,
     @Body() addProductToOrderDto: AddProductToOrderDto[],
+
+    @Param('id', ParseIntPipe) orderId: number,
   ): Promise<ProductOrder[]> {
     return this.ordersService.addProductToOrder(orderId, addProductToOrderDto);
   }
-
+  @ApiQuery({ name: 'status', enum: OrderStatus })
   @Patch(':id/status')
   async updateOrderStatus(
     @Param('id', ParseIntPipe) orderId: number,
