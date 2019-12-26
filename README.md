@@ -30,6 +30,7 @@ Minimalistic CRM for my soul
 
 ## Will be done in future
 
+- Add response type for swagger
 - Check for Error handling
 - ~~Validation pipes~~
 - ~~JWT auth strategy~~
