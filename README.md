@@ -30,13 +30,13 @@ Minimalistic CRM for my soul
 
 ## Will be done in future
 
-- Add response type for swagger
-- Check for Error handling
+- ~~Add response type for swagger
+- ~~Check for Error handling
 - ~~Validation pipes~~
 - ~~JWT auth strategy~~
 - Unit tests
 - ~~Enviroment variables~~ replaced with config package, ENVs still can be used for 90% cases
-- Logging
+- ~~Logging
 - FE with **ReactJS** in another repo
 - ~~Swagger~~
 
