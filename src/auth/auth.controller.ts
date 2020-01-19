@@ -15,7 +15,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @UsePipes(ValidationPipe)
+  // @UsePipes(ValidationPipe)
   @Post('signup')
   async signUp(@Body() createUserDto: CreateUserDto): Promise<string> {
     console.log(createUserDto)
