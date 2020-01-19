@@ -18,6 +18,7 @@ export class AuthController {
   @UsePipes(ValidationPipe)
   @Post('signup')
   async signUp(@Body() createUserDto: CreateUserDto): Promise<string> {
+    console.log(createUserDto)
     return this.authService.signUp(createUserDto);
   }
 

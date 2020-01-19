@@ -18,6 +18,7 @@ import { Product } from './product.entity';
 import { UpdateProductDto } from './dto/update-product-dto';
 import { AuthGuard } from '@nestjs/passport';
 
+
 @UseGuards(AuthGuard())
 @Controller('products')
 export class ProductsController {
