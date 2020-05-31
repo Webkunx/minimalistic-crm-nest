@@ -30,14 +30,16 @@ Minimalistic CRM for my soul
 
 ## Will be done in future
 
+- add config module
 - env vars
 - sample-env file
 - docker
+- modules to modules folder
+- change entities as remove type to interface
 
 - ~~Validation pipes~~
 - ~~JWT auth strategy~~
 - Unit tests
-- ~~Logging~~
 - FE with **ReactJS** in another repo
 
 ## Installation
