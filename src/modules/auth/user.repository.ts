@@ -1,27 +1,27 @@
-import { EntityRepository, Repository } from 'typeorm';
-import { User } from './user.entity';
-import { CreateUserDto } from './dto/create-user-dto';
-import * as bcrypt from 'bcrypt';
-import { ConflictException } from '@nestjs/common';
+import { EntityRepository, Repository } from "typeorm";
+import { CreateUserDto } from "./dto/create-user-dto";
+import * as bcrypt from "bcrypt";
+import { ConflictException } from "@nestjs/common";
+import { UserEntity } from "./user.entity";
 
-@EntityRepository(User)
-export class UserRepository extends Repository<User> {
+@EntityRepository(UserEntity)
+export class UserRepository extends Repository<UserEntity> {
   async signUp(createUserDto: CreateUserDto): Promise<string> {
     const { username, password } = createUserDto;
     const found = await this.findOne({ where: { username } });
 
     if (found) {
-      throw new ConflictException('User with this username already exists');
+      throw new ConflictException("User with this username already exists");
     }
 
-    const user = new User();
+    const user = new UserEntity();
     user.username = username;
 
     user.salt = await bcrypt.genSalt(10);
 
     user.password = await bcrypt.hash(password, user.salt);
 
-    user.save();
+    await this.save(user);
 
     return user.username;
   }
