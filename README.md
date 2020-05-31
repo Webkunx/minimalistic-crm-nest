@@ -30,17 +30,15 @@ Minimalistic CRM for my soul
 
 ## Will be done in future
 
-- add config module
-- env vars
-- sample-env file
 - docker
-- modules to modules folder
-- change entities as remove type to interface
+- ci/cd w/ github actions after writing some tests
+- mb host on heroku and RDS as db?
+- caching w/ redis
 
-- ~~Validation pipes~~
 - ~~JWT auth strategy~~
 - Unit tests
 - FE with **ReactJS** in another repo
+- change basic JWT to jwt + refresh + useragent ( smth like sessions but in JWT manner ), or just change JWT to sessions
 
 ## Installation
 
