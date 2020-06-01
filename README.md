@@ -30,13 +30,13 @@ Minimalistic CRM for my soul
 
 ## Will be done in future
 
-- ci/cd w/ github actions after writing some tests
-- caching w/ redis
 - Unit tests
+- ci/cd w/ github actions after writing some tests
 - change basic JWT to jwt + refresh + useragent ( smth like sessions but in JWT manner ), or just change JWT to sessions
 - FE with **ReactJS** in another repo
 
 - ~~docker~~
+- ~~caching w/ redis~~
 
 ## Installation
 

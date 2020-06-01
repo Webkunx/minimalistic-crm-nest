@@ -15,5 +15,7 @@ services:
       - db.env
     volumes:
       - database-data:/var/lib/postgresql/data/
+  redis:
+    image: "redis"
 volumes:
   database-data:
