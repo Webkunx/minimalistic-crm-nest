@@ -3,9 +3,13 @@ import { AppModule } from "./modules/app.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { Logger } from "@nestjs/common";
 import * as morgan from "morgan";
+import { typeOrmConfig } from "./config/typeorm.config";
 
 const bootstrap = async () => {
   const port = process.env.PORT;
+  console.log("ADASDASDASD");
+
+  console.log(typeOrmConfig);
 
   const app = await NestFactory.create(AppModule);
 

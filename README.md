@@ -30,15 +30,13 @@ Minimalistic CRM for my soul
 
 ## Will be done in future
 
-- docker
 - ci/cd w/ github actions after writing some tests
-- mb host on heroku and RDS as db?
 - caching w/ redis
-
-- ~~JWT auth strategy~~
 - Unit tests
-- FE with **ReactJS** in another repo
 - change basic JWT to jwt + refresh + useragent ( smth like sessions but in JWT manner ), or just change JWT to sessions
+- FE with **ReactJS** in another repo
+
+- ~~docker~~
 
 ## Installation
 
@@ -57,6 +55,10 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+
+
+# docker mode
+$ docker-compose up -d
 ```
 
 ## Test

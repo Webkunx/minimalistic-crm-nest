@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  app:
+    image: node:14
+    command: sh -c "npm i && npm rebuild bcrypt --build-from-source && npm run build && npm run start:prod"
+    volumes:
+      - ./:/app
+    ports:
+      - 8080:8080
+    working_dir: /app
+  postgres:
+    image: "postgres"
+    env_file:
+      - db.env
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+volumes:
+  database-data:
